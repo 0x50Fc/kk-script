@@ -125,7 +125,7 @@ public class ScriptContext implements IScriptContext {
             int i = 0;
 
             for(Object key : v.keySet()) {
-                keys[i] = stringValue(key,"");
+                keys[i++] = stringValue(key,"");
             }
 
             return keys;
@@ -181,7 +181,6 @@ public class ScriptContext implements IScriptContext {
 
             clazz = clazz.getSuperclass();
         }
-
         return keys.toArray(new String[keys.size()]);
 
     }
