@@ -72,7 +72,7 @@ public class ScriptContext implements IScriptContext {
         }
 
         if(value instanceof String) {
-
+            return Integer.parseInt((String) value);
         }
 
         return defaultValue;
