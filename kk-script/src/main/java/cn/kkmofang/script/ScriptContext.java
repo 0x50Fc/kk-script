@@ -72,7 +72,10 @@ public class ScriptContext implements IScriptContext {
         }
 
         if(value instanceof String) {
-
+            try {
+                return Integer.valueOf((String) value);
+            }
+            catch(Throwable e){}
         }
 
         return defaultValue;
@@ -86,6 +89,53 @@ public class ScriptContext implements IScriptContext {
 
         if(value instanceof Number) {
             return ((Number) value).longValue();
+        }
+
+        if(value instanceof String) {
+            try {
+                return Long.valueOf((String) value);
+            }
+            catch(Throwable e){}
+        }
+
+        return defaultValue;
+    }
+
+    public static float floatValue(Object value,float defaultValue) {
+
+        if(value == null) {
+            return defaultValue;
+        }
+
+        if(value instanceof Number) {
+            return ((Number) value).floatValue();
+        }
+
+        if(value instanceof String) {
+            try {
+                return Float.valueOf((String) value);
+            }
+            catch(Throwable e){}
+        }
+
+        return defaultValue;
+    }
+
+    public static double doubleValue(Object value,double defaultValue) {
+
+        if(value == null) {
+            return defaultValue;
+        }
+
+        if(value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+
+        if(value instanceof String) {
+            try {
+                return Double.valueOf((String) value);
+            }
+            catch(Throwable e){}
         }
 
         return defaultValue;
