@@ -176,6 +176,7 @@ public class ScriptContext implements IScriptContext {
 
             for(Object key : v.keySet()) {
                 keys[i] = stringValue(key,"");
+                i ++;
             }
 
             return keys;
