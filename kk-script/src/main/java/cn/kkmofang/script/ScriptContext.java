@@ -1,8 +1,15 @@
 package cn.kkmofang.script;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -213,6 +220,30 @@ public class ScriptContext implements IScriptContext {
             return ((IScriptObject) object).keys();
         }
 
+        if(object instanceof JSONObject) {
+            JSONObject v = (JSONObject) object;
+            String[] keys = new String[v.length()];
+            int i = 0;
+            Iterator<String> ii = v.keys();
+
+            while(ii.hasNext() && i < keys.length) {
+                keys[i ++] = ii.next();
+            }
+
+            return keys;
+        }
+
+        if(object instanceof JSONArray) {
+            JSONArray v = (JSONArray) object;
+            String[] keys = new String[v.length()];
+
+            for(int i=0;i<keys.length;i++) {
+                keys[i] = String.valueOf(i);
+            }
+
+            return keys;
+        }
+
         Class<?> clazz = object.getClass();
 
         Set<String> keys = new TreeSet<>();
@@ -293,6 +324,28 @@ public class ScriptContext implements IScriptContext {
 
         }
 
+        if(object instanceof JSONObject) {
+            return ((JSONObject) object).opt(key);
+        }
+
+        if(object instanceof JSONArray) {
+
+            JSONArray v = (JSONArray) object;
+
+            if("length".equals(key)) {
+                return v.length();
+            }
+
+            int i = intValue(key,0);
+
+            if(i >=0 && i < v.length()) {
+                return v.opt(i);
+            }
+
+            return null;
+
+        }
+
         Class<?> clazz = object.getClass();
 
         while(clazz != null) {
@@ -354,6 +407,30 @@ public class ScriptContext implements IScriptContext {
 
         if(object instanceof IScriptObject) {
             ((IScriptObject) object).set(key,value);
+            return;
+        }
+
+        if(object instanceof JSONObject) {
+            JSONObject v = (JSONObject) object;
+            if(value == null) {
+                v.remove(key);
+            } else {
+                try {
+                    v.put(key,value);
+                } catch (JSONException e) {}
+            }
+        }
+
+        if(object instanceof JSONArray) {
+            JSONArray v = (JSONArray) object;
+            int i = intValue(key,0);
+
+            if(i >=0 && i < v.length()) {
+                try {
+                    v.put(i,value);
+                } catch (JSONException e) {}
+            }
+
             return;
         }
 
