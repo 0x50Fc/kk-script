@@ -1,11 +1,8 @@
 package cn.kkmofang.script;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
