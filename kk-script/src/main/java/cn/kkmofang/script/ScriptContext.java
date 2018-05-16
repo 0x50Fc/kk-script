@@ -163,7 +163,7 @@ public class ScriptContext implements IScriptContext {
             return ((String)value).equals("true") || ((String)value).equals("yes");
         }
 
-        return defaultValue;
+        return true;
     }
 
     public static String[] keys(Object object) {
