@@ -368,8 +368,14 @@ public class ScriptContext implements IScriptContext {
         }
 
         if(object instanceof Map) {
-            Map v = (Map) object;
-            v.put(key,value);
+            Map<String,Object> v = (Map<String,Object>) object;
+            if(value == null) {
+                if(v.containsKey(key)) {
+                    v.remove(key);
+                }
+            } else {
+                v.put(key, value);
+            }
             return;
         }
 
