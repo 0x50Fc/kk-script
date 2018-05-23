@@ -213,8 +213,8 @@ public class ScriptContext implements IScriptContext {
 
         }
 
-        if(object instanceof IScriptObject) {
-            return ((IScriptObject) object).keys();
+        if(object instanceof IKeys) {
+            return ((IKeys) object).keys();
         }
 
         if(object instanceof JSONObject) {
@@ -315,9 +315,9 @@ public class ScriptContext implements IScriptContext {
 
         }
 
-        if(object instanceof IScriptObject) {
+        if(object instanceof IGetter) {
 
-            return ((IScriptObject) object).get(key);
+            return ((IGetter) object).get(key);
 
         }
 
@@ -408,8 +408,8 @@ public class ScriptContext implements IScriptContext {
 
         }
 
-        if(object instanceof IScriptObject) {
-            ((IScriptObject) object).set(key,value);
+        if(object instanceof ISetter) {
+            ((ISetter) object).set(key,value);
             return;
         }
 
